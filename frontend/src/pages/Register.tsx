@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axios'; 
 import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
@@ -11,7 +11,9 @@ const Register = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3333/auth/signup', {
+      // 2. გამოიყენე api.post და მხოლოდ ენდპოინთი /auth/signup
+      // ის ავტომატურად გამოიყენებს Render-ის ლინკს Vercel-ზე
+      await api.post('/auth/signup', {
         email,
         password,
       });
