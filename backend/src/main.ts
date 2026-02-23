@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: 'link-flow-app-git-main-jemosurmans-projects.vercel.app',
+    origin: 'https://link-flow-app.vercel.app/login',
     
     credentials: true,
 });
