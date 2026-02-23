@@ -5,12 +5,19 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: [
-      'https://link-flow-app.vercel.app',
-      'https://link-flow-c6xyaxfln-jemosurmans-projects.vercel.app',
-      'http://localhost:5173', // ლოკალური ტესტირებისთვის
-    ],
-    credentials: true,
+  origin: (origin, callback) => {
+    if (
+      !origin || 
+      origin.match(/^https:\/\/link-flow.*\.vercel\.app$/) || 
+      origin.includes('localhost')
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
 });
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true
